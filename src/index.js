@@ -1,15 +1,15 @@
-import xlsxPopulate from 'xlsx-populate'
+import XlsxPopulate from 'xlsx-populate'
 
 /********* Crear archivos excel *********/
 /*
-xlsxPopulate.fromBlankAsync().then((workbook) => {
+XlsxPopulate.fromBlankAsync().then((workbook) => {
   workbook.sheet(0).cell('A1').value('Hello World')
   return workbook.toFileAsync('./salida.xlsx')
 })
 */
 /*
 async function main() {
-  const workbook = await xlsxPopulate.fromBlankAsync()
+  const workbook = await XlsxPopulate.fromBlankAsync()
 
   workbook.sheet(0).cell('A1').value('Nombre')
   workbook.sheet(0).cell('B1').value('Apellido')
@@ -28,9 +28,9 @@ async function main() {
 */
 
 /********* Leer archivos excel *********/
-
+/*
 async function main() {
-  const workbook = await xlsxPopulate.fromFileAsync('./excel/salida.xlsx')
+  const workbook = await XlsxPopulate.fromFileAsync('./excel/salida.xlsx')
   //   leer por celda
   //   const value = workbook.sheet('Sheet1').cell('A1').value()
   //   const value2 = workbook.sheet('Sheet1').cell('A2').value()
@@ -44,6 +44,47 @@ async function main() {
   // leer por rango
   const value = workbook.sheet('Sheet1').range('A1:B2').value()
   console.log(value)
+}
+*/
+
+/********* Crear y agregar datos *********/
+/*
+async function main() {
+  const workbook = await XlsxPopulate.fromBlankAsync()
+  workbook
+    .sheet(0)
+    .cell('A1')
+    .value([
+      [1, 2, 3],
+      ['Nombre', 'Apellidos', 'Edad'],
+      ['Juan', 'Perez', 25],
+      ['Pedro', 'Lopez', 31],
+    ])
+  workbook.toFileAsync('./excel/salida2.xlsx')
+}
+*/
+
+/********* Editar excel *********/
+async function main() {
+  const workbook = await XlsxPopulate.fromFileAsync('./excel/salida2.xlsx')
+
+  // Cambiar el nombre a una hoja
+  workbook.sheet('Sheet1').name('Hoja de prueba')
+
+  // crear una nueva hoja
+  workbook.addSheet('Hoja 2')
+  workbook.addSheet('Hoja 3')
+
+  // Eliminar una hoja
+  workbook.deleteSheet('Hoja 2')
+
+  // Salida del archivo
+  // workbook.toFileAsync('./excel/salida3.xlsx')
+
+  // colocar contraseña al archivo
+  workbook.toFileAsync('./excel/salida3.xlsx', {
+    password: '12346',
+  })
 }
 
 main()
